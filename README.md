@@ -2,7 +2,7 @@
 
 Flutter Android app demonstrating MetaKeep SDK integration for wallet operations and transaction signing.
 
-![MetaKeep Demo App Screenshot](metakeep_demo_screenshot.png)
+![MetaKeep Demo App Screenshot](public/Outcome.png)
 
 *Screenshot showing the app interface with wallet address, transaction hash, and Etherscan link*
 
@@ -25,9 +25,17 @@ Flutter Android app demonstrating MetaKeep SDK integration for wallet operations
 - Copy the HTTP URL from your app dashboard
 
 ### 3. Configure the App
-- Open `flutter_txn/lib/main.dart`
-- Replace `YOUR_APP_ID_HERE` with your MetaKeep App ID
-- Replace `YOUR_SEPOLIA_RPC_URL_HERE` with your Alchemy Sepolia RPC URL
+**File:** `flutter_txn/lib/main.dart`
+
+**Line 35:** Replace `YOUR_SEPOLIA_RPC_URL_HERE` with your Alchemy Sepolia RPC URL
+```dart
+static const String _rpcEndpoint = 'YOUR_SEPOLIA_RPC_URL_HERE';
+```
+
+**Line 42:** Replace `YOUR_APP_ID_HERE` with your MetaKeep App ID
+```dart
+sdk = MetaKeep("YOUR_APP_ID_HERE");
+```
 
 ### 4. Install Dependencies
 ```bash
