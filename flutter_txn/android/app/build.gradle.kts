@@ -30,10 +30,10 @@ android {
         versionName = flutter.versionName
 
         // ---> Configure MetaKeep Domain and Scheme
-        // metakeepDomain: Replace <app_id> with your app's id which you can find in the developer console
+        // metakeepDomain: Replace <YOUR_APP_ID> with your app's id which you can find in the developer console
         // metakeepScheme: Replace com.domain.app with your app's package name
         manifestPlaceholders += mapOf(
-            "metakeepDomain" to "a071e2fe-54b8-41f2-8082-137e2073085e.auth.metakeep.xyz",
+            "metakeepDomain" to "<YOUR_APP_ID>.auth.metakeep.xyz",
             "metakeepScheme" to "com.example.fluttertxn"
         )
         // <---

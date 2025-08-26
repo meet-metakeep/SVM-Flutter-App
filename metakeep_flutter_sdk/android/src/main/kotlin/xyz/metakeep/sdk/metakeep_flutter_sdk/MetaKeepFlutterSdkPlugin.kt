@@ -62,6 +62,7 @@ class MetaKeepFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
             SET_USER_METHOD -> setUser(call, result)
             SIGN_MESSAGE_METHOD -> signMessage(call, result)
             SIGN_TRANSACTION_METHOD -> signTransaction(call, result)
+            SIGN_SOLANA_TRANSACTION_METHOD -> signSolanaTransaction(call, result)
             SIGN_TYPED_DATA_METHOD -> signTypedData(call, result)
             GET_CONSENT_METHOD -> getConsent(call, result)
             GET_WALLET_METHOD -> getWallet(call, result)
@@ -162,6 +163,30 @@ class MetaKeepFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
         sdk.signTransaction(
             JsonRequest(
                 JSONObject(transaction as Map<*, *>?).toString(),
+            ),
+            reason,
+            getCallback(result),
+        )
+    }
+
+    private fun signSolanaTransaction(
+        call: MethodCall,
+        result: Result,
+    ) {
+        val serializedTransactionMessage = call.argument<String>(SERIALIZED_TRANSACTION_MESSAGE_FIELD)
+        val reason = call.argument<String>(REASON_FIELD)
+
+        if (serializedTransactionMessage == null || reason == null) {
+            rejectWithErrorStatus(
+                INVALID_ARGUMENTS_ERROR_STATUS,
+                result,
+            )
+            return
+        }
+
+        sdk.signTransaction(
+            JsonRequest(
+                JSONObject(mapOf("serializedTransactionMessage" to serializedTransactionMessage)).toString(),
             ),
             reason,
             getCallback(result),
@@ -281,6 +306,7 @@ class MetaKeepFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
         const val SET_USER_METHOD = "setUser"
         const val SIGN_MESSAGE_METHOD = "signMessage"
         const val SIGN_TRANSACTION_METHOD = "signTransaction"
+        const val SIGN_SOLANA_TRANSACTION_METHOD = "signSolanaTransaction"
         const val SIGN_TYPED_DATA_METHOD = "signTypedData"
         const val GET_CONSENT_METHOD = "getConsent"
         const val GET_WALLET_METHOD = "getWallet"
@@ -300,6 +326,7 @@ class MetaKeepFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
         const val EMAIL_FIELD = "email"
         const val MESSAGE_FIELD = "message"
         const val TRANSACTION_FIELD = "transaction"
+        const val SERIALIZED_TRANSACTION_MESSAGE_FIELD = "serializedTransactionMessage"
         const val TYPED_DATA_FIELD = "typedData"
         const val REASON_FIELD = "reason"
         const val STATUS_FIELD = "status"

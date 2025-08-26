@@ -40,6 +40,15 @@ class MetaKeep {
     });
   }
 
+  /// Signs a Solana transaction using the Metakeep SDK.
+  Future<dynamic> signSolanaTransaction(String serializedTransactionMessage, String reason) async {
+    return await MetakeepFlutterSdkPlatform.instance.methodChannel
+        .invokeMethod<dynamic>(signSolanaTransactionMethod, {
+      serializedTransactionMessageField: serializedTransactionMessage,
+      reasonField: reason,
+    });
+  }
+
   /// Signs typed data using the Metakeep SDK.
   Future<dynamic> signTypedData(dynamic typedData, String reason) async {
     return await MetakeepFlutterSdkPlatform.instance.methodChannel
@@ -68,6 +77,7 @@ class MetaKeep {
   static const String setUserMethod = 'setUser';
   static const String signMessageMethod = 'signMessage';
   static const String signTransactionMethod = 'signTransaction';
+  static const String signSolanaTransactionMethod = 'signSolanaTransaction';
   static const String signTypedDataMethod = 'signTypedData';
   static const String getConsentMethod = 'getConsent';
   static const String getWalletMethod = 'getWallet';
@@ -77,6 +87,7 @@ class MetaKeep {
   static const String userField = 'user';
   static const String messageField = 'message';
   static const String transactionField = 'transaction';
+  static const String serializedTransactionMessageField = 'serializedTransactionMessage';
   static const String typedDataField = 'typedData';
   static const String reasonField = 'reason';
   static const String consentTokenField = 'consentToken';
